@@ -26,7 +26,7 @@ cd ..
 echo ""
 echo "▶️ Starting React Frontend"
 cd react-frontend
-docker compose up -d --build
+docker compose build --no-cache && docker compose up -d
 cd ..
 
 echo ""

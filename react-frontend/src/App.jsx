@@ -14,6 +14,16 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600 p-6">
       <div className="max-w-2xl mx-auto space-y-6">
+        {/* App Title */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 text-center">
+          <h1 className="text-2xl font-bold text-gray-800">
+            User Simple Management
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Create and view users easily
+          </p>
+        </div>
+        
         {/* Create User Form */}
         <UserForm onUserCreated={handleUserCreated} />
 
