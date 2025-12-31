@@ -138,6 +138,8 @@ fullstack-assignment/
   - Display created user confirmation
   - Toggle-able user list (show/hide)
   - Responsive design
+#### Frontend Preview (http://localhost:4135)
+<img height="450" alt="image" src="https://github.com/user-attachments/assets/468444ee-eacc-4850-94e7-9ab37909bde8" />
 
 ---
 
