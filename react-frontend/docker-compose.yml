@@ -1,0 +1,16 @@
+services:
+  react-frontend:
+    image: fullstack/react-frontend
+    build: .
+    container_name: react_frontend
+    environment:
+      VITE_PHP_API_BASE_URL: http://php-api
+    ports:
+      - "4135:4135"
+    networks:
+      - fullstack_network
+    restart: unless-stopped
+
+networks:
+  fullstack_network:
+    external: true

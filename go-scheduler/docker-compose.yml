@@ -1,0 +1,22 @@
+services:
+  go-scheduler:
+    image: fullstack/go-scheduler
+    build: .
+    container_name: go_scheduler
+    environment:
+      PHP_API_BASE_URL: http://php-api
+      PYTHON_API_BASE_URL: http://python-api:5000
+      SCHEDULER_INTERVAL_SECONDS: 30
+      DATA_DIR: /data
+    volumes:
+      - scheduler_data:/data
+    networks:
+      - fullstack_network
+    restart: unless-stopped
+
+networks:
+  fullstack_network:
+    external: true
+
+volumes:
+  scheduler_data:

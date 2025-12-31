@@ -1,0 +1,51 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: xtramile
+      MYSQL_DATABASE: userdb
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - fullstack_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pxtramile"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: --default-authentication-plugin=mysql_native_password
+
+  php-api:
+    image: fullstack/php-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php_api
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: userdb
+      DB_USER: root
+      DB_PASSWORD: xtramile
+      XDEBUG_MODE: debug
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - fullstack_network
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+
+networks:
+  fullstack_network:
+    external: true
+    name: fullstack_network
+
+volumes:
+  mysql_data:

@@ -1,0 +1,19 @@
+services:
+  python-api:
+    image: fullstack/python-api
+    build: .
+    container_name: python_api
+    environment:
+      DATA_DIR: /data
+    volumes:
+      - python_data:/data
+    networks:
+      - fullstack_network
+    restart: unless-stopped
+
+networks:
+  fullstack_network:
+    external: true
+
+volumes:
+  python_data:
