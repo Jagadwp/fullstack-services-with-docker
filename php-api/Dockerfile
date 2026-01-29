@@ -17,6 +17,9 @@ RUN echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.
     && echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.log=/tmp/xdebug.log" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 # Configure Apache VirtualHost
 RUN echo '<VirtualHost *:80>\n\
     DocumentRoot /var/www/html/public\n\
@@ -32,6 +35,12 @@ RUN echo '<VirtualHost *:80>\n\
 
 # Set working directory
 WORKDIR /var/www/html
+
+# Copy composer files first (for layer caching)
+COPY composer.json composer.lock* ./
+    
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Copy application files
 COPY . /var/www/html/

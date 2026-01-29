@@ -39,7 +39,7 @@ class Database
     public static function initializeSchema(): void
     {
         $db = self::getConnection();
-        
+
         $query = "
             CREATE TABLE IF NOT EXISTS users (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -53,6 +53,8 @@ class Database
             $db->exec($query);
         } catch (PDOException $e) {
             error_log("Schema initialization failed: " . $e->getMessage());
+
+            throw $e;
         }
     }
 }
